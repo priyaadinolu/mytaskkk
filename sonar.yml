@@ -1,6 +1,6 @@
 ---
 
-- name: Install Jenkins, Docker, SonarQube.
+- name: sonarcube install.
   hosts: all
   become: true
   tasks:

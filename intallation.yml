@@ -5,7 +5,7 @@
   tasks:
     - name: Install Java Development Kit (JDK)
       apt:
-        name: openjdk-8-jdk
+        name: openjdk-11-jdk
         state: present
     - name: Add Jenkins Repository Key
       apt_key:

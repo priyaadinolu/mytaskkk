@@ -1,6 +1,6 @@
 ---
 
-- name: sonarcube install.
+- name: sonar_binary_stat.stat.exists.
   hosts: all
   become: true
   tasks:

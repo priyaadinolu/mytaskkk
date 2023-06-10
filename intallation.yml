@@ -65,12 +65,12 @@
         url: https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-8.9.0.43852.zip
         dest: /tmp/sonarqube.zip
 
-    - name: Extract SonarQube
-      unarchive:
-        src: /tmp/sonarqube.zip
-        dest: /opt/
-        remote_src: yes
-        extra_opts: ['--strip-components=1']
+    - name: Pull SonarQube Image
+  community.docker.docker_image:
+
+    - name: Create a network (SonarQube)
+      community.docker.docker_network:
+       name: net_sonarqube
 
     - name: Change ownership of SonarQube directory
       file:

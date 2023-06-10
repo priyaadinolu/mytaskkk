@@ -49,13 +49,10 @@
         filename: docker
 
     - name: Install Docker
-      ansible.builtin.apt:
-        name:
-          - docker-ce
-          - docker-ce-cli
-          - containerd.io
-        state: latest
-        update_cache: true
+      apt:
+        name: docker.io
+        state: present
+
         
         
     - name: Install SonarQube

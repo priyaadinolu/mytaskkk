@@ -55,27 +55,4 @@
 
         
         
-    - name: Install SonarQube
-      apt:
-        name: openjdk-11-jdk
-        state: present
-
-    - name: Download SonarQube
-      get_url:
-        url: https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-8.9.0.43852.zip
-        dest: /tmp/sonarqube.zip
-
-    - name: Pull SonarQube Image
-  community.docker.docker_image:
-
-    - name: Create a network (SonarQube)
-      community.docker.docker_network:
-       name: net_sonarqube
-
-    - name: Change ownership of SonarQube directory
-      file:
-        path: /opt/sonarqube
-        owner: "{{ ansible_user }}"
-        group: "{{ ansible_user }}"
-        state: directory
-
+    

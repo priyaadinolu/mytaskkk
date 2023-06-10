@@ -1,9 +1,13 @@
 ---
 
-- name: "Check if SonarQube binary exists"
-  state:
-    path: "{{ sonar_daemon_dir }}/sonar.sh"
-  register: sonar_binary_stat
+- name: Install Jenkins, Docker, SonarQube.
+  hosts: all
+  become: true
+  tasks:
+    - name: "Check if SonarQube binary exists"
+      state:
+      path: "{{ sonar_daemon_dir }}/sonar.sh"
+      register: sonar_binary_stat
 
 - block:
   - name: "Download SonarQube binaries"

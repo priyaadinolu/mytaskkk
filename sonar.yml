@@ -1,7 +1,7 @@
 ---
 
 - name: "Check if SonarQube binary exists"
-  stat:
+  state:
     path: "{{ sonar_daemon_dir }}/sonar.sh"
   register: sonar_binary_stat
 

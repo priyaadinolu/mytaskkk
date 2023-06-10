@@ -1,0 +1,77 @@
+---
+- name: Install Jenkins, Docker, SonarQube.
+  hosts: all
+  become: true
+  tasks:
+    - name: Install Java Development Kit (JDK)
+      apt:
+        name: openjdk-8-jdk
+        state: present
+    - name: Add Jenkins Repository Key
+      apt_key:
+        url: https://pkg.jenkins.io/debian/jenkins.io.key
+        state: present
+
+    - name: Add Jenkins Repository
+      apt_repository:
+        repo: deb https://pkg.jenkins.io/debian-stable binary/
+        state: present
+
+    - name: Update apt and install Jenkins
+      apt:
+        name: jenkins
+        state: present
+      notify:
+        - start jenkins
+
+    - name: Start Jenkins
+      service:
+        name: jenkins
+        state: started
+
+    - name: Install Docker
+      apt:
+        name: docker.io
+        state: present
+
+    - name: Install Docker Compose
+      apt:
+        name: docker-compose
+        state: present
+
+    - name: Add Docker group
+      group:
+        name: docker
+        state: present
+
+    - name: Add current user to Docker group
+      user:
+        name: "{{ ansible_user }}"
+        groups: docker
+        append: yes
+        
+        
+    - name: Install SonarQube
+      apt:
+        name: openjdk-11-jdk
+        state: present
+
+    - name: Download SonarQube
+      get_url:
+        url: https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-8.9.0.43852.zip
+        dest: /tmp/sonarqube.zip
+
+    - name: Extract SonarQube
+      unarchive:
+        src: /tmp/sonarqube.zip
+        dest: /opt/
+        remote_src: yes
+        extra_opts: ['--strip-components=1']
+
+    - name: Change ownership of SonarQube directory
+      file:
+        path: /opt/sonarqube
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+        state: directory
+
